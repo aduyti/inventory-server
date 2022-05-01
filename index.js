@@ -29,6 +29,17 @@ async function run() {
             const products = await cursor.toArray();
             res.send(products);
         });
+        // get product by id
+        app.get('/inventory/id/:id', async (req, res) => {
+            const query = { _id: ObjectId(req.params.id) };
+            const product = await inventoryCollection.findOne(query);
+            res.send(product);
+        })
+        //create new product
+        app.post('/inventory/new', async (req, res) => {
+            const newProduct = req.body;
+        })
+
     }
     finally {
     }
