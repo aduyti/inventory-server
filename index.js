@@ -38,11 +38,12 @@ async function run() {
         //create new product
         app.post('/inventory/new', async (req, res) => {
             const newProduct = req.body;
+            const result = await inventoryCollection.insertOne(newProduct);
+            res.send(result);
         })
 
     }
-    finally {
-    }
+    finally { }
 }
 run().catch(console.dir);
 
