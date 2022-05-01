@@ -21,13 +21,23 @@ async function run() {
             const cursor = inventoryCollection.find(query);
             const products = await cursor.toArray();
             res.send(products);
-
+        });
+        // get only 6 products
+        app.get('/inventory/6', async (req, res) => {
+            const query = {};
+            const cursor = inventoryCollection.find(query).limit(6);
+            const products = await cursor.toArray();
+            res.send(products);
         });
     }
     finally {
     }
 }
 run().catch(console.dir);
+
+app.get('/', (req, res) => {
+    res.send('find links');
+})
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
