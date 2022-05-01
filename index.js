@@ -35,6 +35,13 @@ async function run() {
             const product = await inventoryCollection.findOne(query);
             res.send(product);
         })
+        // get products by email
+        app.get('/inventory/email/:email', async (req, res) => {
+            const query = { ownerEmail: (req.params.email) };
+            const cursor = inventoryCollection.find(query);
+            const products = await cursor.toArray();
+            res.send(products);
+        })
         //create new product
         app.post('/inventory/new', async (req, res) => {
             const newProduct = req.body;
@@ -52,6 +59,12 @@ async function run() {
             };
             const options = { upsert: true };
             const result = await inventoryCollection.updateOne(filter, updatedQuantity, options);
+        })
+        // delete product
+        app.delete('/inventory/id/:id', async (req, res) => {
+            const query = { _id: ObjectId(req.params.id) };
+            const result = await inventoryCollection.deleteOne(query);
+            res.send(result);
         })
 
     }
