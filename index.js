@@ -15,6 +15,20 @@ async function run() {
     try {
         await client.connect();
         const inventoryCollection = client.db('inventory-management').collection('products');
+        const monthlyData = client.db('inventory-management').collection('monthlyStock');
+        const supplierCollection = client.db('inventory-management').collection('supplier');
+        // get monthly Stock data
+        app.get('/data/monthly', async (req, res) => {
+            const cursor = monthlyData.find({});
+            const products = await cursor.toArray();
+            res.send(products);
+        })
+        // get supplier Stock data
+        app.get('/data/supplier', async (req, res) => {
+            const cursor = supplierCollection.find({});
+            const products = await cursor.toArray();
+            res.send(products);
+        })
         // get all products
         app.get('/inventory/all', async (req, res) => {
             const query = {};
