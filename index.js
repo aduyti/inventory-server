@@ -60,8 +60,9 @@ async function run() {
         })
         //create new product
         app.post('/inventory/new', async (req, res) => {
-            const newProduct = req.body;
-            const result = await inventoryCollection.insertOne(newProduct);
+            const product = req.body;
+            console.log(product)
+            const result = await inventoryCollection.insertOne(product);
             res.send(result);
         })
         //update product quantity
