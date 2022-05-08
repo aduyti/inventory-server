@@ -49,7 +49,6 @@ async function run() {
             id = id.length === 24 ? id : '000000000000000000000000';
             const query = { _id: ObjectId(id) };
             const product = await inventoryCollection.findOne(query);
-            console.log(id.length)
             res.send(product);
         })
         // get products by email
@@ -67,11 +66,11 @@ async function run() {
         })
         //update product quantity
         app.put('/inventory/id/:id', async (req, res) => {
-            const newQuantity = req.body;
+            const { quantity } = req.body;
             const filter = { _id: ObjectId(req.params.id) };
             const updatedQuantity = {
                 $set: {
-                    quantity: newQuantity
+                    quantity
                 }
             };
             const options = { upsert: true };
