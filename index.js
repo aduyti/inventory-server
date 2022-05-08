@@ -61,7 +61,6 @@ async function run() {
         //create new product
         app.post('/inventory/new', async (req, res) => {
             const product = req.body;
-            console.log(product)
             const result = await inventoryCollection.insertOne(product);
             res.send(result);
         })
@@ -80,6 +79,7 @@ async function run() {
         // delete product
         app.delete('/inventory/id/:id', async (req, res) => {
             const query = { _id: ObjectId(req.params.id) };
+            console.log(req.params.id);
             const result = await inventoryCollection.deleteOne(query);
             res.send(result);
         })
