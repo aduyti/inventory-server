@@ -45,8 +45,11 @@ async function run() {
         });
         // get product by id
         app.get('/inventory/id/:id', async (req, res) => {
-            const query = { _id: ObjectId(req.params.id) };
+            let id = req.params.id;
+            id = id.length === 24 ? id : '000000000000000000000000';
+            const query = { _id: ObjectId(id) };
             const product = await inventoryCollection.findOne(query);
+            console.log(id.length)
             res.send(product);
         })
         // get products by email
