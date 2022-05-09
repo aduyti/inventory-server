@@ -35,6 +35,7 @@ async function run() {
 
         // AUTH
         app.post('/login', async (req, res) => {
+            console.log(process.env.ACCESS_TOKEN_SECRET);
             const user = req.body;
             const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '12h' });
             res.send({ token });
@@ -117,7 +118,7 @@ async function run() {
 run().catch(console.dir);
 
 // handle OPTIONS as default method
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
